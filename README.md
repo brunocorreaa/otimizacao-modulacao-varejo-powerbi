@@ -2,7 +2,7 @@
 
 ## 📌 Sobre o Projeto
 
-Este projeto consiste em um dashboard interativo desenvolvido no **Power BI** para analisar e monitorar a capacidade de preenchimento de estoque em uma rede de filiais de varejo.
+Este projeto consiste em um dashboard interativo desenvolvido no **Power BI** para analisar e monitorar a capacidade de preenchimento de estoque em uma rede de filiais de varejo. 
 
 O objetivo central é comparar a infraestrutura física (capacidade de equipamentos, modelos e peças) com o volume de estoque atual, permitindo que gestores identifiquem, de forma rápida, gargalos de espaço, superalocação ou subutilização de recursos em cada loja.
 
@@ -17,67 +17,69 @@ No ambiente de varejo de alto volume, a gestão eficiente do espaço de loja é 
 
 ---
 
+## 🛡️ Disclaimer e Privacidade (Dados Anonimizados)
+
+Para fins de exibição pública e proteção de dados sensíveis:
+* **Anonimização:** Todos os dados de filiais, cidades e valores foram alterados para dados sintéticos/fictícios.
+* **Nomenclatura:** Os nomes das tabelas (ex: `fClusterLojaSetor`), bem como variáveis de negócio e medidas, foram renomeados ou abstraídos em relação ao modelo de produção original para garantir a segurança da propriedade intelectual.
+
+---
+
 ## 🏗️ Estrutura de Dados e Relacionamentos
 
-A modelagem de dados foi desenhada para suportar análises performáticas, utilizando um esquema que conecta as tabelas de fato com tabelas de dimensão e uma tabela de medidas centralizada.
+A modelagem de dados segue as melhores práticas de Business Intelligence, utilizando um esquema que conecta tabelas fato e dimensão de forma otimizada.
 
 <img width="1296" height="830" alt="modelo-dados" src="https://github.com/user-attachments/assets/969d605f-b17d-48d6-aeef-75eba2d1c003" />
 
-*Figura 1: Esquema de Dados Profissional.*
+*Figura 1: Esquema de Dados e Relacionamentos.*
 
-### Entidades do Modelo (detalhadas na figura):
+### Entidades do Modelo:
 
-* **fFamiliasFilialSetor (Fato):** Centraliza métricas sobre completude de sortimento por loja e setor (Famílias Completas, Incompletas, Inválidas, Total).
-* **fClusterLojaSetor (Fato Central):** A tabela 'âncora' que conecta as métricas operacionais e financeiras por loja/setor (Estoque Custo, Qtd, Peças, etc.) com as outras entidades.
-* **dFiliais (Dimensão):** Cadastro das lojas (Filial, Cidade, Nome, Região). Relacionada via campo `Filial`.
-* **_Medidas (Tabela de Medidas):** Centraliza as medidas DAX (`% Estoque Disponível`, `_Estoque Qtd`, etc.).
+* **fFamiliasFilialSetor (Fato):** Centraliza métricas sobre a completude do mix de produtos (famílias) por setor.
+* **fClusterLojaSetor (Fato Central):** Tabela principal que contém os indicadores de capacidade física, volumetria de peças e estoque por filial.
+* **dFiliais (Dimensão):** Atributos geográficos e cadastrais das unidades de negócio.
+* **_Medidas (Tabela de Medidas):** Centraliza todas as regras de negócio escritas em DAX.
 
 ---
 
 ## 🛠️ Detalhes das Visões (Relatório Power BI)
 
-O relatório é dividido em duas visões complementares: uma focada no desempenho geral das filiais e outra focada no desempenho detalhado por setor.
+O relatório é dividido em duas visões principais para permitir uma análise macro (Filial) e micro (Setor).
 
 ### 1. Visão Geral: Capacidade de Estoque por Loja
 
-Esta visão apresenta uma tabela analítica comparativa para todas as filiais.
+Esta visão apresenta uma tabela analítica comparativa que serve como o primeiro nível de diagnóstico para a rede.
 
 **Destaques:**
-* **Análise de Infraestrutura:** Colunas para `Equipamentos`, `Modelos` e `Peças` para entender a capacidade teórica.
-* **Estoque Atual:** Coluna `Estoque` para comparação direta com a capacidade.
+* **Análise de Infraestrutura:** Comparativo entre capacidade teórica (Equipamentos/Modelos) vs. Estoque Real.
 * **Conceito de Famílias:**
-    * **Família Completa:** Contagem de tipos de produtos que têm sortimento completo na loja.
-    * **Família Incompleta:** Tipos de produtos com sortimento parcial.
-    * **Família Total:** Contagem total de tipos de produtos distintos.
-* **Totais Consolidados:** Uma linha de total na base para benchmarking da rede.
+    * **Família Completa:** Sortimento 100% presente na unidade.
+    * **Família Incompleta:** Sortimento com faltas ou rupturas parciais.
+* **Benchmarking:** Linha de totais que permite identificar filiais fora da curva de ocupação média.
 
 <img width="1444" height="810" alt="modulacao-loja" src="https://github.com/user-attachments/assets/f3a95def-e346-402a-aa5a-c2bbd3bcb2f3" />
 
-*Figura 2: Tabela Analítica por Loja.*
+*Figura 2: Tabela Analítica por Unidade de Negócio.*
 
 ---
 
 ### 2. Visão Detalhada: Capacidade de Estoque por Setor
 
-Esta visão foca no desempenho granulado por categoria/setor, permitindo drill-down para áreas específicas.
+Focada no desempenho granular, esta visão permite entender como cada categoria de produto ocupa o espaço disponível na loja.
 
 **Destaques:**
-* **Indicadores-Chave (KPI Cards):** Cards que mostram os totais agregados para `Qtd Peças`, `Estoque Qtd` e `% Estoque Disponível`.
-* **Gráfico de Capacidade Setor:** Um gráfico de barras que compara o desempenho real (barras azuis/vermelhas) contra a meta (barras cinzas).
-    * **Legenda Dinâmica:** As cores indicam se o setor está operando `Abaixo de 10% da Meta` ou `Acima de 10% da Meta`.
+* **Indicadores-Chave (KPIs):** Totalizadores de peças, volume absoluto de estoque e o percentual de ocupação em relação à meta.
+* **Status de Meta:** Gráfico de barras com formatação condicional.
+    * **Azul:** Setor operando dentro dos limites esperados.
+    * **Vermelho:** Setores com desvios superiores a 10% da meta de capacidade (superlotados ou subutilizados).
 
 <img width="1442" height="810" alt="modulacao-setor" src="https://github.com/user-attachments/assets/2ec63fe5-854b-4b62-b429-44b3d83b4a3a" />
 
-*Figura 3: Dashboard por Setor com Gráfico Comparativo.*
+*Figura 3: Visão Setorial com Indicadores de Performance.*
 
----
+## 👤 Autor
 
-## 🚀 Como Executar o Projeto
+Desenvolvido por **[SEU NOME AQUI]**.
 
-1.  **Clone este repositório:**
-    ```bash
-    git clone [https://github.com/](https://github.com/)[SEU_USUARIO]/[NOME_DO_REPOSITORIO].git
-    ```
-2.  **Abra o arquivo Power BI:** Você precisará do **Power BI Desktop** instalado. Abra o arquivo `.pbix` localizado na pasta raiz.
-3.  **Ajuste das Fontes de Dados:** Se necessário, vá em `Transformar Dados` para re-apontar para as fontes originais se os caminhos estiverem quebrados.
-4.  **Publique:** Para visualização web, publique o relatório no seu workspace do Power BI Service.
+* **LinkedIn:** [Seu LinkedIn Aqui]
+* **E-mail:** [Seu E-mail Aqui]
