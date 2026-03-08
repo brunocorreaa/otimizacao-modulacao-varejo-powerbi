@@ -1,4 +1,4 @@
-# Dashboard de Análise de Capacidade e Otimização de Estoque por Filial
+# Análise de Capacidade e Otimização de Estoque por Filial
 
 ## 📌 Sobre o Projeto
 
