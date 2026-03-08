@@ -75,11 +75,4 @@ Focada no desempenho granular, esta visão permite entender como cada categoria 
 
 <img width="1442" height="810" alt="modulacao-setor" src="https://github.com/user-attachments/assets/2ec63fe5-854b-4b62-b429-44b3d83b4a3a" />
 
-*Figura 3: Visão Setorial com Indicadores de Performance.*
-
-## 👤 Autor
-
-Desenvolvido por **[SEU NOME AQUI]**.
-
-* **LinkedIn:** [Seu LinkedIn Aqui]
-* **E-mail:** [Seu E-mail Aqui]
+*Figura 3: Visão Setorial com Indicadores de Performance
